@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account information and preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "description": "User email address" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "photoURL": { "type": "string", "description": "User avatar image URL" },
+        "preferredLanguage": { "type": "string", "description": "User preferred language" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation time" }
+      },
+      "required": ["uid"]
+    },
+    "Transcription": {
+      "title": "Transcription",
+      "description": "Saved audio transcription record with dual modes and analysis",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique transcription ID" },
+        "userId": { "type": "string", "description": "Owner user UID" },
+        "smartText": { "type": "string", "description": "Cleaned, polished smart transcript text" },
+        "verbatimText": { "type": "string", "description": "Word-for-word transcript preserving disfluencies" },
+        "durationSeconds": { "type": "number", "description": "Duration of the speech in seconds" },
+        "wordCount": { "type": "number", "description": "Total word count" },
+        "language": { "type": "string", "description": "Spoken language detected" },
+        "summary": { "type": "string", "description": "Brief 1-2 sentence AI summary" },
+        "source": { "type": "string", "enum": ["live", "file", "voice_live"], "description": "Audio origin" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["id", "userId", "smartText"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Multi-turn Gemini chatbot conversation message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "role": { "type": "string", "enum": ["user", "model", "system"], "description": "Sender role" },
+        "content": { "type": "string", "description": "Message text content" },
+        "modelUsed": { "type": "string", "description": "Gemini model used" },
+        "groundingMetadata": { "type": "string", "description": "Serialized grounding metadata if Google Maps used" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Sent timestamp" }
+      },
+      "required": ["id", "userId", "role", "content"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile data"
+    },
+    "/users/{userId}/transcriptions/{transcriptionId}": {
+      "schema": "Transcription",
+      "description": "Saved transcriptions for each user"
+    },
+    "/users/{userId}/chatHistory/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Chatbot message thread for each user"
+    }
+  }
+}

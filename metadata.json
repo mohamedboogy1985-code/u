@@ -1,0 +1,10 @@
+{
+  "name": "Audio Transcription Studio | نسخ الصوت",
+  "description": "تطبيق احترافي متكامل لنسخ الصوت المباشر وتسجيلات الصوت بالذكاء الاصطناعي مع المقارنة الفورية والتحليل الصوتي",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
